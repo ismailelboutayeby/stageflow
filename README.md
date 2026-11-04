@@ -7,6 +7,37 @@ Application en français, à deux rôles : **Stagiaire** et **Administrateur**.
 
 ---
 
+## Quick start (current working setup)
+
+The app on this machine is configured to run on `http://localhost:3000`
+against the **hosted Supabase project** (`.env.local` already holds the real
+URL, publishable key and service-role key).
+
+```bash
+npm install
+npm run services:check     # probes Auth, DB, service key, private bucket
+npm run dev                # http://localhost:3000
+```
+
+Open `/etat-installation` for an in-app diagnostic of every prerequisite.
+
+> **Supabase free-tier projects pause after 7 days of inactivity.** A paused
+> project loses its `*.supabase.co` DNS record, so signup/login fail with a
+> network error even though the code is fine. Restore the project in the
+> Supabase dashboard, then re-run `npm run services:check`.
+
+Other modes:
+
+| Goal | How |
+| --- | --- |
+| Fully offline stack (Postgres + Auth + Storage + local Inbox) | `cp .env.local.localstack-backup .env.local` then `npx supabase start` — **requires Docker Desktop**; mail is captured at `http://127.0.0.1:54324` |
+| Provision everything with the CLIs | `cp .env.cli.example .env.cli`, add tokens, `npm run cli:setup` — see [docs/CLI_WORKFLOW.md](docs/CLI_WORKFLOW.md) |
+| Deploy to Vercel | [docs/VERCEL_DEPLOY.md](docs/VERCEL_DEPLOY.md) |
+| Verify signup/login with a throwaway account | `npm run services:check -- --with-auth` |
+| Send one real confirmation e-mail | `npm run services:check -- --smtp-test you@mail.com` |
+
+---
+
 ## Démarrage rapide
 
 ```bash

@@ -1,0 +1,24 @@
+# Never upload local state or credentials
+node_modules
+.next
+.vercel
+.git
+.workbuddy-ai
+.env
+.env.*
+!.env.example
+!.env.cli.example
+*.log
+*.tsbuildinfo
+
+# Source-only extras that are not needed to build the app
+docs
+tests
+e2e
+playwright-report
+test-results
+stageflow_11_mockups
+stageflow_admin_pages
+stageflow_public_pages
+*.md
+*.rar

@@ -26,6 +26,8 @@ next-env.d.ts
 .env.production.local
 .env*.local
 .env.local.cloud-backup
+.env.local.localstack-backup
+.env.cli
 
 # Vercel
 .vercel
@@ -68,3 +70,5 @@ yarn-error.log*
 
 # Marker: the Phase 3C database fixes have been applied
 .auth-fixes-applied
+
+.vercel
