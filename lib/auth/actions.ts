@@ -7,6 +7,7 @@ import { getSupabaseConfigIssue } from '@/lib/env'
 import { getSessionUser, homeRouteForRole } from '@/lib/auth/session'
 import { safeRedirectPath } from '@/lib/auth/redirect'
 import { enforceRateLimit, failSafe, getClientIp, ok, fail } from '@/lib/auth/rate-limit'
+import { emailRedirectUrl } from '@/lib/auth/origin'
 import {
   mfaEnrollConfirmSchema,
   mfaUnenrollSchema,
@@ -70,7 +71,7 @@ export async function signUpStagiaire(
           last_name: data.lastName,
           phone: data.phone,
         },
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'}/auth/callback?next=/stagiaire/tableau-de-bord`,
+        emailRedirectTo: await emailRedirectUrl('/auth/callback?next=/stagiaire/tableau-de-bord'),
       },
     })
 
@@ -387,7 +388,7 @@ export async function requestPasswordReset(input: unknown): Promise<ActionResult
 
   try {
     const supabase = await createClient()
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+    const siteUrl = await emailRedirectUrl('')
 
     await supabase.auth.resetPasswordForEmail(parsed.data.email, {
       redirectTo: `${siteUrl}/auth/callback?next=/reinitialiser-mot-de-passe`,
@@ -456,7 +457,7 @@ export async function resendVerificationEmail(email: string): Promise<ActionResu
 
   try {
     const supabase = await createClient()
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+    const siteUrl = await emailRedirectUrl('')
 
     await supabase.auth.resend({
       type: 'signup',
